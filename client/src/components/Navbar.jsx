@@ -4,11 +4,11 @@ import { useAuth } from "../store/auth";
 
 export const Navbar = () => {
   const { isLoggedIn } = useAuth();
-  console.log("login or not ", isLoggedIn);
+  // console.log("login or not ", isLoggedIn);
   return (
     <>
       <header>
-        <div className="container">
+        <div className="head-container">
           <div className="logo-brand">
             <NavLink to="/">HardyTechnical</NavLink>
           </div>

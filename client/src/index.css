@@ -1,4 +1,4 @@
-* {
+*{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -185,9 +185,11 @@ a.active{
       margin-bottom: 3.2rem;
     }
   }
+
   & .container {
     padding-top: 3.2rem;
   }
+
   & .contact-img {
     display: flex;
     justify-content: start;
@@ -214,6 +216,39 @@ a.active{
     textarea {
       width: 80%;
       padding: 0.4rem 0.6rem;
+    }
+
+    & .notify-msg {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+
+      .success-msg {
+        color: rgb(25, 148, 25);
+        margin-top: 10px;
+        font-weight: 600;
+        font-size: large;
+        min-width: 300px;
+        min-height: 50px;
+        text-align: center;
+        border: 2px solid var(--btn-color);
+        border-radius: 0.8rem;
+        background-color: lightgray;
+      }
+
+      .error-msg {
+        color: rgb(25, 148, 25);
+        margin-top: 10px;
+        font-weight: 600;
+        font-size: large;
+        min-width: 300px;
+        min-height: 50px;
+        text-align: center;
+        border: 2px solid var(--btn-color);
+        border-radius: 0.8rem;
+        background-color: lightgray;
+      }
+
     }
   }
 }

@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 
 const home = async (req, res) => {
     try{
-        res.status(200).send('Welcome to Home Using router');
+        res.status(200).send('Welcome to Home!');
     }catch(error){
         console.log(error);
     }
@@ -60,8 +60,20 @@ const login = async (req, res) => {
         }
 
     }catch(error){
-        res.status(500).json({message: "Internal Server Error"});
+        // res.status(500).json({message: "Internal Server Error"});
+        next(error);
     }
 };
 
-module.exports = { home,register,login };
+// to send user data = User logic
+const user = async(req,res) => {
+    try {
+        const userData = req.user;
+        console.log(userData);
+        return res.status(200).json({userData});
+    } catch (error) {
+        console.log(`error from the user route: ${error}`);
+    }
+}
+
+module.exports = { home,register,login,user };

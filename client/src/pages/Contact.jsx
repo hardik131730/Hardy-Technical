@@ -1,11 +1,29 @@
 import { useState } from "react";
+import { useAuth } from "../store/auth";
+import { toast } from "react-toastify";
 
-export const Contact = () => {
-  const [contact, setContact] = useState({
+const defaultContactForm = {
     username: "",
     email: "",
     message: "",
-  });
+}
+
+export const Contact = () => {
+  const [contact, setContact] = useState(defaultContactForm);
+
+  const [userData, setUserData] = useState(true);
+
+  const {user} = useAuth();
+
+  if(userData && user){
+    setContact({
+      username:user.username,
+      email:user.email,
+      message:"",
+    });
+
+    setUserData(false);
+  }
 
   // lets tackle our handleInput
   const handleInput = (e) => {
@@ -19,12 +37,31 @@ export const Contact = () => {
   };
 
   // handle fomr getFormSubmissionInfo
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    try {
+      const res = await fetch("http://localhost:5000/api/form/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(contact),
+      })
+
+      const data = await res.json();
+
+      if (data.success){
+        // console.log(data.message);
+        toast.success(data.message);
+        setContact(defaultContactForm);
+      }
+    } catch (error) {
+      console.log("Error in submitting contact form:", error);
+      toast.error("Failed to submit contact form");
+    }
     console.log(contact);
   };
-
 
   return (
     <>
@@ -32,6 +69,7 @@ export const Contact = () => {
         <div className="contact-content container">
           <h1 className="main-heading">contact us</h1>
         </div>
+
         {/* contact page main  */}
         <div className="container grid grid-two-cols">
           <div className="contact-img">
