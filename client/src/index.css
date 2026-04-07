@@ -321,6 +321,7 @@ a.active {
   );
   background-size: 500%;
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.25);
   position: relative;
@@ -398,7 +399,7 @@ a.active {
     }
     & input {
       width: 80%;
-      padding: 0.6rem 0.6rem;
+      padding: 0.5rem 1rem;
     }
 
     & button {
@@ -407,16 +408,62 @@ a.active {
   }
 }
 
-.adminNav ul {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
+/** -----------------------
+** Admin Layout css
+** -------------------------  */
 
 .adminContainer {
   display: grid;
-  padding-top: 0;
-  grid-template-columns: 1fr 3fr;
+  padding: 0;
+  grid-template-columns: 250px 1fr;
+  min-height: 100vh;
+  gap: 0;
+}
+
+.admin-header {
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: 3.2rem 2.4rem;
+  border-right: 0.1rem solid rgba(128, 128, 128, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+@media (prefers-color-scheme: light) {
+  .admin-header {
+    background-color: var(--bg-color);
+    border-right: 0.1rem solid rgba(0, 0, 0, 0.1);
+  }
+}
+
+.adminNav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  padding: 0;
+}
+
+.adminNav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.2rem 2.4rem;
+  font-size: 1.8rem;
+  color: inherit;
+  font-weight: 600;
+  border-radius: 0.8rem;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+}
+
+.adminNav ul li a:hover,
+.adminNav ul li a.active {
+  background-color: var(--btn-color);
+  color: #fff;
+  padding-left: 3.2rem;
+}
+
+.admin-content {
+  padding: 3.2rem 2.4rem;
+  overflow-y: auto;
 }
 
 .adminList {
@@ -478,13 +525,38 @@ a.active {
 ** -------------------------  */
 
 @media (width <= 998px) {
+  .adminContainer {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  
+  .admin-header {
+    border-right: none;
+    border-bottom: 0.1rem solid rgba(128, 128, 128, 0.3);
+  }
+  
+  .adminNav ul {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .admin-content {
+    overflow-x: auto;
+    padding: 1.6rem;
+  }
+
   .grid-two-cols {
     grid-template-columns: 1fr;
   }
 
+  .grid-four-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .section-services {
     & .grid-three-cols {
-      grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+       grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
     }
   }
 
@@ -503,6 +575,18 @@ a.active {
     font-size: 56.25%;
   }
 
+  .grid-four-cols {
+    grid-template-columns: 1fr;
+  }
+
+  .section-analytics .grid .div1 {
+    border-right: none;
+    border-bottom: 0.2rem solid var(--dark-color);
+  }
+  .section-analytics .grid .div1:last-child {
+    border: none;
+  }
+
   .section-registration {
     & .container {
       & .reg-img img {
@@ -518,4 +602,87 @@ a.active {
       }
     }
   }
+
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+  }
+
+  .secondary-btn {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/** -----------------------
+** Table styling
+** -------------------------  */
+
+table {
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 3.2rem 0;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+@media (prefers-color-scheme: light) {
+  table {
+    background: #fff;
+  }
+}
+
+th, td {
+  padding: 1.6rem 2.4rem;
+  text-align: left;
+  border-bottom: 0.1rem solid rgba(128, 128, 128, 0.3);
+}
+
+th {
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  background-color: var(--bg-color);
+  color: var(--dark-color);
+}
+
+td {
+  font-size: 1.6rem;
+  color: inherit;
+}
+
+tbody tr:hover {
+  background-color: var(--bg-color);
+  transition: all 0.2s linear;
+}
+tbody tr:hover td {
+  color: var(--dark-color);
+}
+
+/* Edit and Delete button styling inside table */
+td a, td button {
+  display: inline-block;
+  background-color: var(--btn-color);
+  color: #fff;
+  padding: 0.8rem 1.6rem;
+  border-radius: 0.8rem;
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+td a:hover, td button:hover {
+  box-shadow: inset 0 0 0 0.2rem var(--bg-color);
+  color: #fff;
 }

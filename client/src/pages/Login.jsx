@@ -60,9 +60,9 @@ export const Login = () => {
     <>
         <section>
             <main>
-                <div className="section-login">
-                    <div className="container grid-two-cols">
-                        <div className="login-image">
+                <div className="section-registration">
+                    <div className="container grid grid-two-cols">
+                        <div className="registration-image">
                             <img 
                                 src="/images/login.png" 
                                 alt="a boy is trying to do login"
@@ -72,7 +72,7 @@ export const Login = () => {
                         </div>
 
                         {/* let tackle login form */}
-                        <div className="login-form">
+                        <div className="registration-form">
                             <h1 className="main-heading mb-3">Login form</h1>
                             <br />
 
@@ -84,7 +84,7 @@ export const Login = () => {
                                         name="email" 
                                         placeholder="email" 
                                         id="email" 
-                                        autoComplete="off" 
+                                        autoComplete="new-password" 
                                         value={user.email}
                                         onChange={handleInput}
                                     />
@@ -97,7 +97,7 @@ export const Login = () => {
                                         name="password" 
                                         placeholder="password" 
                                         id="password" 
-                                        autoComplete="off"
+                                        autoComplete="new-password"
                                         value={user.password}
                                         onChange={handleInput}
                                     />

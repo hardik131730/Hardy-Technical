@@ -7,8 +7,11 @@ export const Navbar = () => {
   // console.log("login or not ", isLoggedIn);
   return (
     <>
-      <header>
-        <div className="head-container">
+      <header style={{
+        backgroundColor: "rgba(255, 255, 255, 0.03)",
+        borderBottom: "0.1rem solid rgba(128, 128, 128, 0.3)",
+      }}>
+        <div className="container head-container">
           <div className="logo-brand">
             <NavLink to="/">HardyTechnical</NavLink>
           </div>

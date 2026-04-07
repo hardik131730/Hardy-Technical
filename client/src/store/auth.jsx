@@ -67,8 +67,10 @@ export const AuthProvider = ({ children }) => {
     getServices();
   }, [])
 
+  const authorizationToken = `Bearer ${token}`;
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user, services }}>
+    <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user, services, authorizationToken }}>
       {children}
     </AuthContext.Provider>
   );

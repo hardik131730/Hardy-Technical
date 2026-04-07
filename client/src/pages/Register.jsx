@@ -45,7 +45,7 @@ export const Register = () => {
             console.log("res from server",res_data.extraDetails);
 
             if(response.ok){
-                
+            
                 storeTokenInLS(res_data.token);
                 setUser({username: "",email: "",phone: "",password: ""});
                 toast.success("Registration successful");
@@ -63,7 +63,7 @@ export const Register = () => {
         <section>
             <main>
                 <div className="section-registration">
-                    <div className="container grid-two-cols">
+                    <div className="container grid grid-two-cols">
                         <div className="registration-image">
                             <img 
                                 src="/images/register.png" 
@@ -78,7 +78,7 @@ export const Register = () => {
                             <h1 className="main-heading mb-3">registration form</h1>
                             <br />
 
-                            <form onSubmit={handleSubmit}>
+                            <form onSubmit={handleSubmit} autoComplete="off">
                                 <div>
                                     <label htmlFor="username">username</label>
                                     <input 
@@ -124,7 +124,7 @@ export const Register = () => {
                                         name="password" 
                                         placeholder="password" 
                                         id="password" 
-                                        autoComplete="off"
+                                        autoComplete="new-password"
                                         value={user.password}
                                         onChange={handleInput}
                                     />
