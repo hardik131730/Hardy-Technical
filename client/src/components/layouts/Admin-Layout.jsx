@@ -3,13 +3,13 @@ import { useAuth } from "../../store/auth";
 import { FaUser, FaHome, FaRegListAlt, FaAddressBook } from "react-icons/fa";
 
 export const AdminLayout = () => {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoading } = useAuth();
 
-  if (!isLoggedIn) {
-      return <Navigate to="/login" />
+  if (isLoading) {
+    return <h1>Loading...</h1>;
   }
 
-  if (user && !user.isAdmin) {
+  if (!user.isAdmin) {
     return <Navigate to="/" />;
   }
 

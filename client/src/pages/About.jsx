@@ -58,7 +58,7 @@ export const About = () => {
       </main>
 
       <section className="section-analytycs">
-        <div className="container grid grid-four-cols">
+        <div className="container grid grid-four-cols" style={{ background: "#191919" }}>
           <div className="div1">
             <h2>50+</h2>
             <p>registered companies</p>

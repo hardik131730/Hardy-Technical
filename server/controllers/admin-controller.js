@@ -2,14 +2,36 @@ const User = require("../models/user-model");
 const Contact = require("../models/contact-model");
 const Service = require("../models/service-model");
 
-const getAllUsers = async(req,res) => {
+const getAllUsers = async(req, res, next) => {
     try {
-        const users = await User.find({},{password:0});
-        console.log(users);
-        if(!users || users.length ===0){
-            return res.status(404).json({message: "No users found"});
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const search = req.query.search || "";
+
+        const query = search ? {
+            $or: [
+                { username: { $regex: search, $options: "i" } },
+                { email: { $regex: search, $options: "i" } },
+                { phone: { $regex: search, $options: "i" } }
+            ]
+        } : {};
+
+        const totalUsers = await User.countDocuments(query);
+        const users = await User.find(query, { password: 0 })
+            .skip(skip)
+            .limit(limit);
+
+        if (!users || users.length === 0) {
+            return res.status(404).json({ message: "No users found" });
         }
-        return res.status(200).json(users);
+
+        return res.status(200).json({
+            users,
+            totalUsers,
+            totalPages: Math.ceil(totalUsers / limit),
+            currentPage: page
+        });
     } catch (error) {
         next(error);
     }
@@ -42,14 +64,33 @@ const addUser = async(req, res) => {
     }
 }
 
-const getAllContacts = async(req,res) => {
+const getAllContacts = async(req,res, next) => {
     try {
-        const contacts = await Contact.find();
-        console.log(contacts);
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page-1) * limit;
+        const search = req.query.search || "";
+
+        const query = search ? {
+            $or: [
+                { username: { $regex: search, $options: "i" } },
+                { email: { $regex: search, $options: "i" } },
+                { message: { $regex: search, $options: "i" } }
+            ]
+        } : {};
+
+        const totalContacts = await Contact.countDocuments(query);
+        const contacts = await Contact.find(query).skip(skip).limit(limit);
+        // console.log(contacts);
         if(!contacts || contacts.length ===0){
             return res.status(404).json({message: "No contacts found"});
         }
-        return res.status(200).json(contacts);
+        return res.status(200).json({
+            contacts,
+            totalContacts,
+            totalPages: Math.ceil(totalContacts / limit),
+            currentPage: page
+        });
     }catch (error){
         next(error);
     }
@@ -96,13 +137,33 @@ const deleteContactById = async(req,res) => {
     }
 }
 
-const getAllServices = async(req,res) => {
+const getAllServices = async(req, res, next) => {
     try {
-        const services = await Service.find();
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const search = req.query.search || "";
+
+        const query = search ? {
+            $or: [
+                {service: {$regex: search, $options: "i"}},
+                {price: {$regex: search, $options: "i"}},
+                {description: {$regex: search, $options: "i"}},
+                {provider: {$regex: search, $options: "i"}}
+            ]
+        } : {};
+
+        const totalServices = await Service.countDocuments(query);
+        const services = await Service.find(query).skip(skip).limit(limit);
         if(!services || services.length ===0){
             return res.status(404).json({message: "No services found"});
         }
-        return res.status(200).json(services);
+        return res.status(200).json({
+            services,
+            totalServices,
+            totalPages: Math.ceil(totalServices / limit),
+            currentPage: page
+        });
     }catch (error){
         next(error);
     }
