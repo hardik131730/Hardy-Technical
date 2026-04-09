@@ -67,9 +67,8 @@ export const Register = () => {
                         <div className="registration-image">
                             <img 
                                 src="/images/register.png" 
-                                alt="a girl is trying to do registration"
+                                alt="Secure biometric registration interface"
                                 width="500"
-                                height="500"
                             />
                         </div>
 

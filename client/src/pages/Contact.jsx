@@ -73,7 +73,7 @@ export const Contact = () => {
         {/* contact page main  */}
         <div className="container grid grid-two-cols">
           <div className="contact-img">
-            <img src="/images/support.png" alt="we are always ready to help" />
+            <img src="/images/support.png" alt="Futuristic customer support interface" width="500" />
           </div>
 
           {/* contact form content actual  */}

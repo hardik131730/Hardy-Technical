@@ -69,11 +69,33 @@ const login = async (req, res) => {
 const user = async(req,res) => {
     try {
         const userData = req.user;
-        console.log(userData);
         return res.status(200).json({userData});
     } catch (error) {
         console.log(`error from the user route: ${error}`);
     }
 }
 
-module.exports = { home,register,login,user };
+// Update user profile (name, phone, profile picture)
+const updateProfile = async(req, res, next) => {
+    try {
+        const userId = req.user._id;
+        const { username, phone } = req.body;
+        const updateData = {};
+
+        if (username) updateData.username = username;
+        if (phone) updateData.phone = phone;
+        if (req.file) updateData.image = `/uploads/${req.file.filename}`;
+
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { $set: updateData },
+            { new: true, select: "-password" }
+        );
+
+        return res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+    } catch (error) {
+        next(error);
+    }
+};
+
+module.exports = { home, register, login, user, updateProfile };

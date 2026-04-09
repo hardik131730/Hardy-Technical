@@ -19,7 +19,11 @@ export const Service = () => {
                     return(
                     <div className="card" key ={index}>
                         <div className="card-img">
-                            <img src="/images/design.png" alt="our services info" width="200"/>
+                            <img 
+                                src={curElem.image ? `http://localhost:5000${curElem.image}` : "/images/design.png"} 
+                                alt={service} 
+                                width="200"
+                            />
                         </div>
                         <div className="card-details">
                             <div className="grid grid-two-cols">
@@ -31,7 +35,7 @@ export const Service = () => {
                         </div>
                     </div>)
                     })
-                };
+                }
                 
             </div>
         </section>

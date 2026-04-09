@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
@@ -9,7 +9,11 @@ export const AdminServiceUpdate = () => {
         description: "",
         price: "",
         provider: "",
+        image: "",
     });
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+    const fileInputRef = useRef(null);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -26,6 +30,9 @@ export const AdminServiceUpdate = () => {
             const serviceData = await response.json();
             if (response.ok) {
                 setData(serviceData);
+                if (serviceData.image) {
+                    setImagePreview(`http://localhost:5000${serviceData.image}`);
+                }
             }
         } catch (error) {
             console.log(error);
@@ -39,23 +46,35 @@ export const AdminServiceUpdate = () => {
     const handleInput = (e) => {
         let name = e.target.name;
         let value = e.target.value;
+        setData({ ...data, [name]: value });
+    };
 
-        setData({
-            ...data,
-            [name]: value,
-        });
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setImageFile(file);
+            setImagePreview(URL.createObjectURL(file));
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const formData = new FormData();
+            formData.append("service", data.service);
+            formData.append("price", data.price);
+            formData.append("description", data.description);
+            formData.append("provider", data.provider);
+            if (imageFile) {
+                formData.append("image", imageFile);
+            }
+
             const response = await fetch(`http://localhost:5000/api/admin/services/update/${params.id}`, {
                 method: "PATCH",
                 headers: {
-                    "Content-Type": "application/json",
                     Authorization: authorizationToken,
                 },
-                body: JSON.stringify(data),
+                body: formData,
             });
 
             if (response.ok) {
@@ -127,10 +146,53 @@ export const AdminServiceUpdate = () => {
                             />
                         </div>
                         <div>
-                            <button type="submit">Update Service</button>
+                            <label>Service Image</label>
+                            <div
+                                className="image-upload-area"
+                                onClick={() => fileInputRef.current.click()}
+                            >
+                                {imagePreview ? (
+                                    <img src={imagePreview} alt="Preview" className="image-preview" />
+                                ) : (
+                                    <div className="image-upload-placeholder">
+                                        <span className="upload-icon">📷</span>
+                                        <p>Click to upload a new image</p>
+                                        <small>JPEG, PNG, WebP (max 5MB)</small>
+                                    </div>
+                                )}
+                            </div>
+                            <input
+                                type="file"
+                                name="image"
+                                accept="image/*"
+                                ref={fileInputRef}
+                                onChange={handleImageChange}
+                                style={{ display: "none" }}
+                            />
+                        </div>
+                        <div>
+                            <button type="submit" className="btn btn-submit">Update Service</button>
                         </div>
                     </form>
                 </section>
+                <div className="service-form-preview">
+                    <h2>Current Preview</h2>
+                    <div className="preview-card">
+                        {imagePreview ? (
+                            <img src={imagePreview} alt="Service" className="preview-card-img" />
+                        ) : (
+                            <div className="preview-card-img-placeholder">
+                                <span>No image</span>
+                            </div>
+                        )}
+                        <div className="preview-card-body">
+                            <h3>{data.service || "Service Name"}</h3>
+                            <p className="preview-price">{data.price || "Price"}</p>
+                            <p className="preview-description">{data.description || "Description"}</p>
+                            <p className="preview-provider">By: {data.provider || "Provider"}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );

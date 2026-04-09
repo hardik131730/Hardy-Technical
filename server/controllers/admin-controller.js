@@ -80,8 +80,27 @@ const getAllContacts = async(req,res, next) => {
         } : {};
 
         const totalContacts = await Contact.countDocuments(query);
-        const contacts = await Contact.find(query).skip(skip).limit(limit);
-        // console.log(contacts);
+        const contacts = await Contact.aggregate([
+            { $match: query },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "email",
+                    foreignField: "email",
+                    as: "user_details"
+                }
+            },
+            {
+                $addFields: {
+                    image: { $arrayElemAt: ["$user_details.image", 0] }
+                }
+            },
+            { $project: { user_details: 0 } },
+            { $sort: { _id: -1 } }, // Optional: sort by newest first
+            { $skip: skip },
+            { $limit: limit }
+        ]);
+
         if(!contacts || contacts.length ===0){
             return res.status(404).json({message: "No contacts found"});
         }
@@ -169,10 +188,11 @@ const getAllServices = async(req, res, next) => {
     }
 }
 
-const addService = async(req,res) => {
+const addService = async(req, res, next) => {
     try {
         const {service, price, description, provider} = req.body;
-        const serviceCreated = await Service.create({service, price, description, provider});
+        const image = req.file ? `/uploads/${req.file.filename}` : "";
+        const serviceCreated = await Service.create({service, price, description, provider, image});
         return res.status(201).json({message : "Service added successfully"})
     } catch (error) {
         next(error);
@@ -189,10 +209,13 @@ const getServiceById = async(req,res) => {
     }
 }
 
-const updateServiceById = async(req,res) => {
+const updateServiceById = async(req, res, next) => {
     try {
         const id = req.params.id;
-        const updateServiceData = req.body;
+        const updateServiceData = { ...req.body };
+        if (req.file) {
+            updateServiceData.image = `/uploads/${req.file.filename}`;
+        }
         const updatedData = await Service.updateOne({_id: id}, {$set: updateServiceData});
         return res.status(200).json(updatedData);
     } catch (error) {

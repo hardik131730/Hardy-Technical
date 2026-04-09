@@ -16,7 +16,9 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+const path = require("path");
 app.use(express.json()); //middeware
+app.use("/uploads", express.static(path.join(__dirname, "public/uploads")));
 
 app.use("/api/auth", authRoute);
 app.use("/api/form", contactRoute);

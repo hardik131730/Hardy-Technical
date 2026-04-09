@@ -97,6 +97,7 @@ export const AdminUsers = () => {
           <table>
             <thead>
               <tr>
+                <th>Photo</th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
@@ -109,6 +110,19 @@ export const AdminUsers = () => {
                 users.map((curUser, index) => {
                   return (
                     <tr key={index}>
+                      <td>
+                        {curUser.image ? (
+                          <img 
+                            src={`http://localhost:5000${curUser.image}`} 
+                            alt={curUser.username} 
+                            className="admin-user-img" 
+                          />
+                        ) : (
+                          <div className="admin-user-img-placeholder">
+                            {curUser.username[0].toUpperCase()}
+                          </div>
+                        )}
+                      </td>
                       <td>{curUser.username}</td>
                       <td>{curUser.email}</td>
                       <td>{curUser.phone}</td>
@@ -125,7 +139,7 @@ export const AdminUsers = () => {
                 })
               ) : (
                 <tr>
-                   <td colSpan="5" style={{ textAlign: "center" }}>No users found</td>
+                   <td colSpan="6" style={{ textAlign: "center" }}>No users found</td>
                 </tr>
               )}
             </tbody>

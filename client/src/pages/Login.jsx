@@ -65,9 +65,8 @@ export const Login = () => {
                         <div className="registration-image">
                             <img 
                                 src="/images/login.png" 
-                                alt="a boy is trying to do login"
+                                alt="Secure digital login interface"
                                 width="500"
-                                height="500"
                             />
                         </div>
 

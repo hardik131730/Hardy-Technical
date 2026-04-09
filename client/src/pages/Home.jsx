@@ -27,9 +27,8 @@ export const Home = () => {
             <div className="hero-image">
               <img
                 src="/images/home.png"
-                alt="coding together"
-                width="400"
-                height="500"
+                alt="Modern and futuristic IT workspace with holographic displays"
+                width="500"
               />
             </div>
           </div>
@@ -65,9 +64,8 @@ export const Home = () => {
           <div className="hero-image">
             <img
               src="/images/design.png"
-              alt="coding together"
-              width="400"
-              height="500"
+              alt="Secure and high-performance IT infrastructure"
+              width="500"
             />
           </div>
 

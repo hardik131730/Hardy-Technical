@@ -4,6 +4,7 @@ const authControllers = require("../controllers/auth-controller");
 const {signupSchema, loginSchema} = require("../validators/auth-validator");
 const validate = require("../middlewares/validate-middleware");
 const authMiddleware = require("../middlewares/auth-middleware");
+const upload = require("../middlewares/upload-middleware");
 
 router.route("/").get(authControllers.home);
 router
@@ -13,6 +14,7 @@ router
     .route("/login")
     .post(validate(loginSchema),authControllers.login);
 
-router.route("/user").get(authMiddleware,authControllers.user);
+router.route("/user").get(authMiddleware, authControllers.user);
+router.route("/user/update-profile").patch(authMiddleware, upload.single("image"), authControllers.updateProfile);
 
 module.exports = router ;

@@ -7,10 +7,7 @@ export const Navbar = () => {
   // console.log("login or not ", isLoggedIn);
   return (
     <>
-      <header style={{
-        backgroundColor: "rgba(255, 255, 255, 0.03)",
-        borderBottom: "0.1rem solid rgba(128, 128, 128, 0.3)",
-      }}>
+      <header>
         <div className="container head-container">
           <div className="logo-brand">
             <NavLink to="/">HardyTechnical</NavLink>
@@ -32,9 +29,14 @@ export const Navbar = () => {
               </li>
 
               {isLoggedIn ? (
-                <li>
-                  <NavLink to="/logout">Logout</NavLink>
-                </li>
+                <>
+                  <li>
+                    <NavLink to="/profile">Profile</NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/logout">Logout</NavLink>
+                  </li>
+                </>
               ) : (
                 <>
                   <li>

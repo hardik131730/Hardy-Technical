@@ -92,6 +92,7 @@ export const AdminContacts = () => {
                 <table>
                     <thead>
                         <tr>
+                            <th>Photo</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Message</th>
@@ -103,6 +104,19 @@ export const AdminContacts = () => {
                             contactData.map((curData, index) => {
                                 return (
                                     <tr key={index}>
+                                        <td>
+                                            {curData.image ? (
+                                                <img 
+                                                    src={`http://localhost:5000${curData.image}`} 
+                                                    alt={curData.username} 
+                                                    className="admin-user-img" 
+                                                />
+                                            ) : (
+                                                <div className="admin-user-img-placeholder">
+                                                    {curData.username[0].toUpperCase()}
+                                                </div>
+                                            )}
+                                        </td>
                                         <td>{curData.username}</td>
                                         <td>{curData.email}</td>
                                         <td>{curData.message}</td>
@@ -114,7 +128,7 @@ export const AdminContacts = () => {
                             })
                         ) : (
                             <tr>
-                                <td colSpan="4" style={{ textAlign: "center" }}>No contacts found</td>
+                                <td colSpan="5" style={{ textAlign: "center" }}>No contacts found</td>
                             </tr>
                         )}
                     </tbody>
