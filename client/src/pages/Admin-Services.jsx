@@ -23,7 +23,7 @@ export const AdminServices = () => {
       if (response.ok) {
         setServices(data.services);
         setTotalPages(data.totalPages);
-      }else {
+      } else {
         setServices([]);
         setTotalPages(1);
       }
@@ -64,7 +64,7 @@ export const AdminServices = () => {
     <>
       <section className="admin-services-section">
         <div className="container admin-services-header">
-           <div className="header-title-container">
+          <div className="header-title-container">
             <h1>Admin Services Data</h1>
             <div className="limit-selector">
               <label>Show </label>
@@ -78,15 +78,15 @@ export const AdminServices = () => {
           </div>
           <div className="header-right-container">
             <div className="search-container">
-              <input 
-                type="text" 
-                placeholder="Search services..." 
-                value={search} 
+              <input
+                type="text"
+                placeholder="Search services..."
+                value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="search-input"
               />
             </div>
-            <Link to="/admin/services/add" className="btn" style={{ padding: "10px 20px", backgroundColor: "var(--btn-color)", color: "#fff", borderRadius: "8px", textDecoration: "none" }}>Add Service</Link>
+            <Link to="/admin/services/add" className="btn" style={{ padding: "10px 20px", backgroundColor: "var(--btn-color)", color: "#fff", borderRadius: "8px", textDecoration: "none", fontSize: "1.6rem" }}>Add Service</Link>
           </div>
         </div>
         <div className="container admin-services">
@@ -126,10 +126,10 @@ export const AdminServices = () => {
               )}
             </tbody>
           </table>
-          
+
           <div className="pagination">
-            <button 
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="pagination-btn"
             >
@@ -137,17 +137,17 @@ export const AdminServices = () => {
             </button>
             <div className="page-numbers">
               {Array.from({ length: totalPages }, (_, i) => (
-                <button 
-                  key={i + 1} 
-                  onClick={() => setCurrentPage(i + 1)} 
+                <button
+                  key={i + 1}
+                  onClick={() => setCurrentPage(i + 1)}
                   className={`pagination-btn ${currentPage === i + 1 ? "active" : ""}`}
                 >
                   {i + 1}
                 </button>
               ))}
             </div>
-            <button 
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               className="pagination-btn"
             >

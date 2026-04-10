@@ -18,6 +18,7 @@ import { AdminServiceUpdate } from "./pages/Admin-Service-Update";
 import { AdminAddUser } from "./pages/Admin-Add-User";
 import { AdminAddService } from "./pages/Admin-Add-Service";
 import { Profile } from "./pages/Profile";
+import { AdminHome } from "./pages/Admin-Home";
 
 const App = () => {
   return (
@@ -36,6 +37,7 @@ const App = () => {
           <Route path="*" element={<Error/>} />
           
           <Route path="/admin" element={<AdminLayout />}>
+             <Route index element={<AdminHome />} />
              <Route path="users" element={<AdminUsers />} />
              <Route path="users/add" element={<AdminAddUser />} />
              <Route path="contacts" element={<AdminContacts />} />

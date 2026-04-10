@@ -5,6 +5,7 @@ const authMiddleware = require("../middlewares/auth-middleware");
 const adminMiddleware = require("../middlewares/admin-middleware");
 const upload = require("../middlewares/upload-middleware");
 
+router.route("/stats").get(authMiddleware, adminMiddleware, adminController.getAdminStats);
 router.route("/users").get(authMiddleware, adminMiddleware, adminController.getAllUsers);
 router.route("/users/add").post(authMiddleware, adminMiddleware, adminController.addUser);
 router.route("/users/:id").get(authMiddleware, adminMiddleware, adminController.getUserById);

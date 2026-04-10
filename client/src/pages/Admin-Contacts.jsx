@@ -6,7 +6,7 @@ export const AdminContacts = () => {
     const [contactData, setContactData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
-    const [limit, setLimit] = useState(5); 
+    const [limit, setLimit] = useState(5);
     const [search, setSearch] = useState("");
     const { authorizationToken } = useAuth();
 
@@ -78,10 +78,10 @@ export const AdminContacts = () => {
                 </div>
                 <div className="header-right-container">
                     <div className="search-container">
-                        <input 
-                            type="text" 
-                            placeholder="Search contacts..." 
-                            value={search} 
+                        <input
+                            type="text"
+                            placeholder="Search contacts..."
+                            value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             className="search-input"
                         />
@@ -106,10 +106,10 @@ export const AdminContacts = () => {
                                     <tr key={index}>
                                         <td>
                                             {curData.image ? (
-                                                <img 
-                                                    src={`http://localhost:5000${curData.image}`} 
-                                                    alt={curData.username} 
-                                                    className="admin-user-img" 
+                                                <img
+                                                    src={`http://localhost:5000${curData.image}`}
+                                                    alt={curData.username}
+                                                    className="admin-user-img"
                                                 />
                                             ) : (
                                                 <div className="admin-user-img-placeholder">
@@ -134,32 +134,32 @@ export const AdminContacts = () => {
                     </tbody>
                 </table>
                 <div className="pagination">
-                    <button 
-                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                         disabled={currentPage === 1}
                         className="pagination-btn"
                     >
-                    Previous
+                        Previous
                     </button>
                     <div className="page-numbers">
                         {Array.from({ length: totalPages }, (_, i) => (
-                            <button 
-                                key={i + 1} 
-                                onClick={() => setCurrentPage(i + 1)} 
+                            <button
+                                key={i + 1}
+                                onClick={() => setCurrentPage(i + 1)}
                                 className={`pagination-btn ${currentPage === i + 1 ? "active" : ""}`}
                             >
                                 {i + 1}
-                            </button>   
+                            </button>
                         ))}
                     </div>
-                    <button 
-                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+                    <button
+                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                         disabled={currentPage === totalPages}
                         className="pagination-btn"
                     >
-                    Next
+                        Next
                     </button>
-                </div>  
+                </div>
             </div>
         </section>
     );

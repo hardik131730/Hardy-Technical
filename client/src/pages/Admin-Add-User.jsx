@@ -105,8 +105,9 @@ export const AdminAddUser = () => {
                                 required
                             />
                         </div>
-                        <div>
-                            <button type="submit">Add User</button>
+                        <div className="btn-group" style={{ display: "flex", gap: "1.6rem", marginTop: "3.2rem" }}>
+                            <button type="submit" className="btn" style={{ flex: 1, marginTop: 0 }}>Add User</button>
+                            <button type="button" className="btn secondary-btn" style={{ flex: 1 }} onClick={() => navigate("/admin/users")}>Cancel</button>
                         </div>
                     </form>
                 </section>

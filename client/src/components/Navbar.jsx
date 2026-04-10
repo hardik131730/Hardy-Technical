@@ -3,8 +3,9 @@ import "./Navbar.css";
 import { useAuth } from "../store/auth";
 
 export const Navbar = () => {
+
   const { isLoggedIn } = useAuth();
-  // console.log("login or not ", isLoggedIn);
+
   return (
     <>
       <header>
@@ -32,9 +33,6 @@ export const Navbar = () => {
                 <>
                   <li>
                     <NavLink to="/profile">Profile</NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/logout">Logout</NavLink>
                   </li>
                 </>
               ) : (

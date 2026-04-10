@@ -96,7 +96,7 @@ const getAllContacts = async(req,res, next) => {
                 }
             },
             { $project: { user_details: 0 } },
-            { $sort: { _id: -1 } }, // Optional: sort by newest first
+            { $sort: { _id: -1 } },
             { $skip: skip },
             { $limit: limit }
         ]);
@@ -233,4 +233,34 @@ const deleteServiceById = async(req,res) => {
     }
 }
 
-module.exports = {getAllUsers, addUser, getAllContacts, deleteUserById, getUserById, updateUserById, deleteContactById, getAllServices, addService, getServiceById, updateServiceById, deleteServiceById};
+const getAdminStats = async (req, res, next) => {
+    try {
+        const userCount = await User.countDocuments();
+        const contactCount = await Contact.countDocuments();
+        const serviceCount = await Service.countDocuments();
+
+        return res.status(200).json({
+            users: userCount,
+            contacts: contactCount,
+            services: serviceCount
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = {
+    getAllUsers, 
+    addUser, 
+    getAllContacts, 
+    deleteUserById, 
+    getUserById, 
+    updateUserById, 
+    deleteContactById, 
+    getAllServices, 
+    addService, 
+    getServiceById, 
+    updateServiceById, 
+    deleteServiceById,
+    getAdminStats
+};

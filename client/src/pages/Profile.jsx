@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 
@@ -95,6 +96,10 @@ export const Profile = () => {
                     <h2 className="profile-name">{user?.username || "User"}</h2>
                     <p className="profile-email">{user?.email}</p>
                     {user?.isAdmin && <span className="profile-badge">Admin</span>}
+                    
+                    <div className="profile-sidebar-actions">
+                        <NavLink to="/logout" className="btn btn-logout">Logout</NavLink>
+                    </div>
                 </div>
 
                 {/* Profile Form */}

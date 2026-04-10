@@ -68,6 +68,9 @@ export const Contact = () => {
       <section className="section-contact">
         <div className="contact-content container">
           <h1 className="main-heading">contact us</h1>
+          <p style={{ color: "var(--text-dim)", fontSize: "1.8rem", marginTop: "1rem", maxWidth: "80rem" }}>
+            Reach out to us today. Whether you have questions about our services or need expert technical advice, our team is here to support your business journey.
+          </p>
         </div>
 
         {/* contact page main  */}

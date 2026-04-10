@@ -157,8 +157,9 @@ export const AdminAddService = () => {
                                 style={{ display: "none" }}
                             />
                         </div>
-                        <div>
-                            <button type="submit" className="btn btn-submit">Add Service</button>
+                        <div className="btn-group" style={{ display: "flex", gap: "1.6rem", marginTop: "3.2rem" }}>
+                            <button type="submit" className="btn btn-submit" style={{ flex: 1 }}>Add Service</button>
+                            <button type="button" className="btn secondary-btn" style={{ flex: 1 }} onClick={() => navigate("/admin/services")}>Cancel</button>
                         </div>
                     </form>
                 </section>

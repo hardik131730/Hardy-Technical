@@ -82,15 +82,15 @@ export const AdminUsers = () => {
           </div>
           <div className="header-right-container">
             <div className="search-container">
-              <input 
-                type="text" 
-                placeholder="Search users..." 
-                value={search} 
+              <input
+                type="text"
+                placeholder="Search users..."
+                value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 className="search-input"
               />
             </div>
-            <Link to="/admin/users/add" className="btn" style={{ padding: "10px 20px", backgroundColor: "var(--btn-color)", color: "#fff", borderRadius: "8px", textDecoration: "none" }}>Add User</Link>
+            <Link to="/admin/users/add" className="btn" style={{ padding: "10px 20px", backgroundColor: "var(--btn-color)", color: "#fff", borderRadius: "8px", textDecoration: "none", fontSize: "1.6rem" }}>Add User</Link>
           </div>
         </div>
         <div className="container admin-users">
@@ -112,10 +112,10 @@ export const AdminUsers = () => {
                     <tr key={index}>
                       <td>
                         {curUser.image ? (
-                          <img 
-                            src={`http://localhost:5000${curUser.image}`} 
-                            alt={curUser.username} 
-                            className="admin-user-img" 
+                          <img
+                            src={`http://localhost:5000${curUser.image}`}
+                            alt={curUser.username}
+                            className="admin-user-img"
                           />
                         ) : (
                           <div className="admin-user-img-placeholder">
@@ -139,15 +139,15 @@ export const AdminUsers = () => {
                 })
               ) : (
                 <tr>
-                   <td colSpan="6" style={{ textAlign: "center" }}>No users found</td>
+                  <td colSpan="6" style={{ textAlign: "center" }}>No users found</td>
                 </tr>
               )}
             </tbody>
           </table>
-          
+
           <div className="pagination">
-            <button 
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               className="pagination-btn"
             >
@@ -155,17 +155,17 @@ export const AdminUsers = () => {
             </button>
             <div className="page-numbers">
               {Array.from({ length: totalPages }, (_, i) => (
-                <button 
-                  key={i + 1} 
-                  onClick={() => setCurrentPage(i + 1)} 
+                <button
+                  key={i + 1}
+                  onClick={() => setCurrentPage(i + 1)}
                   className={`pagination-btn ${currentPage === i + 1 ? "active" : ""}`}
                 >
                   {i + 1}
                 </button>
               ))}
             </div>
-            <button 
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
               disabled={currentPage === totalPages}
               className="pagination-btn"
             >

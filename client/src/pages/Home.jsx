@@ -13,7 +13,7 @@ export const Home = () => {
                 we specialize in providing innovative IT services and solutions
                 tailored to meet your unique needs.
               </p>
-              <div className="btn btn-group">
+              <div className="btn-group">
                 <a href="/contact">
                   <button className="btn">connect now</button>
                 </a>
@@ -78,7 +78,7 @@ export const Home = () => {
               let's discuss how Hardy Technical can help your business thrive in
               the digital age.
             </p>
-            <div className="btn btn-group">
+            <div className="btn-group">
               <a href="/contact">
                 <button className="btn">connect now</button>
               </a>

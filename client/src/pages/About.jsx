@@ -38,7 +38,7 @@ export const About = () => {
                 committed to ensuring your IT environment is reliable and
                 available 24/7.
               </p>
-              <div className="btn btn-group">
+              <div className="btn-group">
                 <NavLink to="/contact">
                   <button className="btn"> Connect Now</button>
                 </NavLink>
@@ -56,7 +56,7 @@ export const About = () => {
         </section>
       </main>
 
-      <section className="section-analytycs">
+      <section className="section-analytycs" style={{paddingBottom: "6rem"}}>
         <div className="container grid grid-four-cols" style={{ background: "#191919" }}>
           <div className="div1">
             <h2>50+</h2>
