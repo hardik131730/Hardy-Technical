@@ -76,7 +76,7 @@ export const AdminServiceUpdate = () => {
                 },
                 body: formData,
             });
-
+            
             if (response.ok) {
                 toast.success("Updated successfully");
                 navigate("/admin/services");

@@ -42,7 +42,9 @@ export const About = () => {
                 <NavLink to="/contact">
                   <button className="btn"> Connect Now</button>
                 </NavLink>
-                <button className="btn secondary-btn">learn more</button>
+                <NavLink to="/service">
+                  <button className="btn secondary-btn">learn more</button>
+                </NavLink>
               </div>
             </div>
             <div className="hero-image">
