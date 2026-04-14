@@ -26,6 +26,14 @@ const userSchema = new mongoose.Schema({
     image: {
         type:String,
         default:"",
+    },
+    resetPasswordOtp: {
+        type: String,
+        default: null,
+    },
+    resetPasswordOtpExpiry: {
+        type: Date,
+        default: null,
     }
 });
 

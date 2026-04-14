@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import "./Navbar.css";
 import { useAuth } from "../store/auth";
 import { FaBars, FaTimes } from "react-icons/fa";
@@ -8,6 +8,7 @@ export const Navbar = () => {
 
   const { isLoggedIn } = useAuth();
   const [showMenu, setShowMenu] = useState(false);
+  const location = useLocation();
 
   const handleToggle = () => {
     setShowMenu(!showMenu);
@@ -16,6 +17,11 @@ export const Navbar = () => {
   const closeMenu = () => {
     setShowMenu(false);
   };
+
+  // Do not render Navbar on admin routes
+  if (location.pathname.startsWith("/admin")) {
+    return null;
+  }
 
   return (
     <>

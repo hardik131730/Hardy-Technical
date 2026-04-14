@@ -21,4 +21,13 @@ router.route("/services/:id").get(authMiddleware, adminMiddleware, adminControll
 router.route("/services/update/:id").patch(authMiddleware, adminMiddleware, upload.single("image"), adminController.updateServiceById);
 router.route("/services/delete/:id").delete(authMiddleware, adminMiddleware, adminController.deleteServiceById);
 
+router.route("/notifications").get(authMiddleware, adminMiddleware, adminController.getAllNotifications);
+router.route("/notifications/mark-read/:id").patch(authMiddleware, adminMiddleware, adminController.markNotificationAsRead);
+router.route("/notifications/mark-all-read").patch(authMiddleware, adminMiddleware, adminController.markAllNotificationsAsRead);
+router.route("/notifications/delete/:id").delete(authMiddleware, adminMiddleware, adminController.deleteNotification);
+
+router.route("/orders").get(authMiddleware, adminMiddleware, adminController.getAllOrders);
+router.route("/orders/status/:id").patch(authMiddleware, adminMiddleware, adminController.updateOrderStatus);
+router.route("/orders/delete/:id").delete(authMiddleware, adminMiddleware, adminController.deleteOrder);
+
 module.exports = router;

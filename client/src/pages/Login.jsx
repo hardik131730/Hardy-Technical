@@ -1,5 +1,5 @@
 import { useState } from "react";
-import {useNavigate} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 
@@ -100,6 +100,11 @@ export const Login = () => {
                                         value={user.password}
                                         onChange={handleInput}
                                     />
+                                    <div style={{ textAlign: "right", marginTop: "1rem" }}>
+                                        <Link to="/forgot-password" style={{ color: "var(--primary-color)", fontSize: "1.4rem", textDecoration: "none", fontWeight: "600" }}>
+                                            Forgot Password?
+                                        </Link>
+                                    </div>
                                 </div>
                                 <br />
 

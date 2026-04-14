@@ -90,42 +90,44 @@ export const AdminServices = () => {
           </div>
         </div>
         <div className="container admin-services">
-          <table>
-            <thead>
-              <tr>
-                <th>Service</th>
-                <th>Price</th>
-                <th>Provider</th>
-                <th>Update</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {services && services.length > 0 ? (
-                services.map((curService, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>{curService.service}</td>
-                      <td>{curService.price}</td>
-                      <td>{curService.provider}</td>
-                      <td>
-                        <Link to={`/admin/services/${curService._id}/edit`}>Edit</Link>
-                      </td>
-                      <td>
-                        <button onClick={() => deleteService(curService._id)}>
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
+          <div className="admin-table-container">
+            <table>
+              <thead>
                 <tr>
-                  <td colSpan="5" style={{ textAlign: "center" }}>No services found</td>
+                  <th>Service</th>
+                  <th>Price</th>
+                  <th>Provider</th>
+                  <th>Update</th>
+                  <th>Delete</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {services && services.length > 0 ? (
+                  services.map((curService, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{curService.service}</td>
+                        <td>{curService.price}</td>
+                        <td>{curService.provider}</td>
+                        <td>
+                          <Link to={`/admin/services/${curService._id}/edit`}>Edit</Link>
+                        </td>
+                        <td>
+                          <button onClick={() => deleteService(curService._id)}>
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan="5" style={{ textAlign: "center" }}>No services found</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
 
           <div className="pagination">
             <button

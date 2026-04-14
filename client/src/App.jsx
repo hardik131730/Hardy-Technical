@@ -5,6 +5,7 @@ import {Contact} from "./pages/Contact";
 import {Service} from "./pages/Service";
 import {Register} from "./pages/Register";
 import {Login} from "./pages/Login";
+import { ForgotPassword } from "./pages/ForgotPassword";
 import { Navbar } from "./components/Navbar";
 import { Error } from "./pages/Error";
 import { Footer } from "./components/Footer/Footer";
@@ -19,6 +20,9 @@ import { AdminAddUser } from "./pages/Admin-Add-User";
 import { AdminAddService } from "./pages/Admin-Add-Service";
 import { Profile } from "./pages/Profile";
 import { AdminHome } from "./pages/Admin-Home";
+import { AdminNotifications } from "./pages/Admin-Notifications";
+import { AdminOrders } from "./pages/Admin-Orders";
+import { MyBookings } from "./pages/MyBookings";
 
 const App = () => {
   return (
@@ -32,8 +36,10 @@ const App = () => {
           <Route path="/service" element={<Service/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/login" element={<Login/>} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
           <Route path="/logout" element={<Logout/>} />
           <Route path="/profile" element={<Profile/>} />
+          <Route path="/my-bookings" element={<MyBookings/>} />
           <Route path="*" element={<Error/>} />
           
           <Route path="/admin" element={<AdminLayout />}>
@@ -45,6 +51,8 @@ const App = () => {
              <Route path="services/add" element={<AdminAddService />} />
              <Route path="users/:id/edit" element={<AdminUpdate />} />
              <Route path="services/:id/edit" element={<AdminServiceUpdate />} />
+             <Route path="notifications" element={<AdminNotifications />} />
+             <Route path="orders" element={<AdminOrders />} />
           </Route>
         </Routes>
         <Footer />

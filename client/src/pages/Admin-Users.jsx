@@ -94,56 +94,58 @@ export const AdminUsers = () => {
           </div>
         </div>
         <div className="container admin-users">
-          <table>
-            <thead>
-              <tr>
-                <th>Photo</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Update</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users && users.length > 0 ? (
-                users.map((curUser, index) => {
-                  return (
-                    <tr key={index}>
-                      <td>
-                        {curUser.image ? (
-                          <img
-                            src={`http://localhost:5000${curUser.image}`}
-                            alt={curUser.username}
-                            className="admin-user-img"
-                          />
-                        ) : (
-                          <div className="admin-user-img-placeholder">
-                            {curUser.username[0].toUpperCase()}
-                          </div>
-                        )}
-                      </td>
-                      <td>{curUser.username}</td>
-                      <td>{curUser.email}</td>
-                      <td>{curUser.phone}</td>
-                      <td>
-                        <Link to={`/admin/users/${curUser._id}/edit`}>Edit</Link>
-                      </td>
-                      <td>
-                        <button onClick={() => deleteUser(curUser._id)}>
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              ) : (
+          <div className="admin-table-container">
+            <table>
+              <thead>
                 <tr>
-                  <td colSpan="6" style={{ textAlign: "center" }}>No users found</td>
+                  <th>Photo</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Update</th>
+                  <th>Delete</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {users && users.length > 0 ? (
+                  users.map((curUser, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>
+                          {curUser.image ? (
+                            <img
+                              src={`http://localhost:5000${curUser.image}`}
+                              alt={curUser.username}
+                              className="admin-user-img"
+                            />
+                          ) : (
+                            <div className="admin-user-img-placeholder">
+                              {curUser.username[0].toUpperCase()}
+                            </div>
+                          )}
+                        </td>
+                        <td>{curUser.username}</td>
+                        <td>{curUser.email}</td>
+                        <td>{curUser.phone}</td>
+                        <td>
+                          <Link to={`/admin/users/${curUser._id}/edit`}>Edit</Link>
+                        </td>
+                        <td>
+                          <button onClick={() => deleteUser(curUser._id)}>
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan="6" style={{ textAlign: "center" }}>No users found</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
 
           <div className="pagination">
             <button

@@ -89,50 +89,52 @@ export const AdminContacts = () => {
                 </div>
             </div>
             <div className="container admin-contacts">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Photo</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Message</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {contactData && contactData.length > 0 ? (
-                            contactData.map((curData, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>
-                                            {curData.image ? (
-                                                <img
-                                                    src={`http://localhost:5000${curData.image}`}
-                                                    alt={curData.username}
-                                                    className="admin-user-img"
-                                                />
-                                            ) : (
-                                                <div className="admin-user-img-placeholder">
-                                                    {curData.username[0].toUpperCase()}
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td>{curData.username}</td>
-                                        <td>{curData.email}</td>
-                                        <td>{curData.message}</td>
-                                        <td>
-                                            <button onClick={() => deleteContact(curData._id)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                );
-                            })
-                        ) : (
+                <div className="admin-table-container">
+                    <table>
+                        <thead>
                             <tr>
-                                <td colSpan="5" style={{ textAlign: "center" }}>No contacts found</td>
+                                <th>Photo</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Message</th>
+                                <th>Delete</th>
                             </tr>
-                        )}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {contactData && contactData.length > 0 ? (
+                                contactData.map((curData, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>
+                                                {curData.image ? (
+                                                    <img
+                                                        src={`http://localhost:5000${curData.image}`}
+                                                        alt={curData.username}
+                                                        className="admin-user-img"
+                                                    />
+                                                ) : (
+                                                    <div className="admin-user-img-placeholder">
+                                                        {curData.username[0].toUpperCase()}
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td>{curData.username}</td>
+                                            <td>{curData.email}</td>
+                                            <td>{curData.message}</td>
+                                            <td>
+                                                <button onClick={() => deleteContact(curData._id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })
+                            ) : (
+                                <tr>
+                                    <td colSpan="5" style={{ textAlign: "center" }}>No contacts found</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
                 <div className="pagination">
                     <button
                         onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}

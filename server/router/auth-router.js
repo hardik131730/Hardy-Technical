@@ -17,4 +17,7 @@ router
 router.route("/user").get(authMiddleware, authControllers.user);
 router.route("/user/update-profile").patch(authMiddleware, upload.single("image"), authControllers.updateProfile);
 
-module.exports = router ;
+router.route("/forgot-password").post(authControllers.forgotPassword);
+router.route("/reset-password").post(authControllers.resetPassword);
+
+module.exports = router;

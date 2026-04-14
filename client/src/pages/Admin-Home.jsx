@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../store/auth";
-import { FaUser, FaRegListAlt, FaAddressBook, FaArrowRight } from "react-icons/fa";
+import { FaUser, FaRegListAlt, FaAddressBook, FaArrowRight, FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export const AdminHome = () => {
     const [stats, setStats] = useState({
         users: 0,
         contacts: 0,
-        services: 0
+        services: 0,
+        orders: 0,
     });
     const { user, authorizationToken } = useAuth();
 
@@ -75,6 +76,19 @@ export const AdminHome = () => {
                         <p className="stat-count">{stats.contacts}</p>
                     </div>
                     <Link to="/admin/contacts" className="stat-link">
+                        View All <FaArrowRight />
+                    </Link>
+                </div>
+
+                <div className="stat-card">
+                    <div className="stat-icon" style={{ background: "rgba(46, 204, 113, 0.15)" }}>
+                        <FaShoppingCart style={{ color: "#2ecc71" }} />
+                    </div>
+                    <div className="stat-info">
+                        <h3>Total Orders</h3>
+                        <p className="stat-count">{stats.orders}</p>
+                    </div>
+                    <Link to="/admin/orders" className="stat-link">
                         View All <FaArrowRight />
                     </Link>
                 </div>

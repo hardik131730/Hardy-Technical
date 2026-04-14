@@ -113,7 +113,7 @@ export const AdminUpdate = () => {
                             />
                         </div>
                         <div className="btn-group" style={{ display: "flex", gap: "1.6rem", marginTop: "3.2rem" }}>
-                            <button type="submit" className="btn" style={{ flex: 1, marginTop: 0 }}>Update</button>
+                            <button type="submit" className="btn btn-submit" style={{ flex: 1 }}>Update User</button>
                             <button type="button" className="btn secondary-btn" style={{ flex: 1 }} onClick={() => navigate("/admin/users")}>Cancel</button>
                         </div>
                     </form>

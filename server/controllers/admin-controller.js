@@ -1,6 +1,8 @@
 const User = require("../models/user-model");
 const Contact = require("../models/contact-model");
 const Service = require("../models/service-model");
+const Notification = require("../models/notification-model");
+const Order = require("../models/order-model");
 
 const getAllUsers = async(req, res, next) => {
     try {
@@ -238,16 +240,104 @@ const getAdminStats = async (req, res, next) => {
         const userCount = await User.countDocuments();
         const contactCount = await Contact.countDocuments();
         const serviceCount = await Service.countDocuments();
+        const orderCount = await Order.countDocuments();
 
         return res.status(200).json({
             users: userCount,
             contacts: contactCount,
-            services: serviceCount
+            services: serviceCount,
+            orders: orderCount,
         });
     } catch (error) {
         next(error);
     }
 }
+
+// Notifications Controllers
+const getAllNotifications = async (req, res, next) => {
+    try {
+        const notifications = await Notification.find().sort({ createdAt: -1 });
+        return res.status(200).json(notifications);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const markNotificationAsRead = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        await Notification.updateOne({ _id: id }, { $set: { isRead: true } });
+        return res.status(200).json({ message: "Notification marked as read" });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteNotification = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        await Notification.deleteOne({ _id: id });
+        return res.status(200).json({ message: "Notification deleted" });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const markAllNotificationsAsRead = async (req, res, next) => {
+    try {
+        await Notification.updateMany({ isRead: false }, { $set: { isRead: true } });
+        return res.status(200).json({ message: "All notifications marked as read" });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Admin Order Controllers
+const getAllOrders = async (req, res, next) => {
+    try {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const skip = (page - 1) * limit;
+        const status = req.query.status || "";
+
+        const query = status ? { status } : {};
+        const totalOrders = await Order.countDocuments(query);
+        const orders = await Order.find(query).sort({ createdAt: -1 }).skip(skip).limit(limit);
+
+        return res.status(200).json({
+            orders,
+            totalOrders,
+            totalPages: Math.ceil(totalOrders / limit),
+            currentPage: page
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const updateOrderStatus = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+        const validStatuses = ["Pending", "Processing", "Completed", "Cancelled"];
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ message: "Invalid status value" });
+        }
+        await Order.updateOne({ _id: id }, { $set: { status } });
+        return res.status(200).json({ message: "Order status updated successfully" });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const deleteOrder = async (req, res, next) => {
+    try {
+        await Order.deleteOne({ _id: req.params.id });
+        return res.status(200).json({ message: "Order deleted successfully" });
+    } catch (error) {
+        next(error);
+    }
+};
 
 module.exports = {
     getAllUsers, 
@@ -262,5 +352,12 @@ module.exports = {
     getServiceById, 
     updateServiceById, 
     deleteServiceById,
-    getAdminStats
+    getAdminStats,
+    getAllNotifications,
+    markNotificationAsRead,
+    deleteNotification,
+    markAllNotificationsAsRead,
+    getAllOrders,
+    updateOrderStatus,
+    deleteOrder
 };
