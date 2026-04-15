@@ -1505,6 +1505,11 @@ textarea::placeholder {
   color: rgba(255, 255, 255, 0.3);
 }
 
+select option {
+  background: var(--bg-color);
+  color: var(--text-color);
+}
+
 /* =============================
    Profile Page
    ============================= */
@@ -2319,3 +2324,12 @@ textarea::placeholder {
     align-items: flex-start;
   }
 }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spin {
+  animation: spin 1s linear infinite;
+}

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
-import { FaTrash, FaClock, FaCheckCircle, FaTimesCircle, FaSpinner, FaBoxOpen } from "react-icons/fa";
+import { FaTrash, FaClock, FaCheckCircle, FaTimesCircle, FaSpinner, FaBoxOpen, FaFileCsv, FaFilePdf } from "react-icons/fa";
+import { exportToCSV, exportToPDF } from "../utils/exportUtils";
 
 const STATUS_OPTIONS = ["Pending", "Processing", "Completed", "Cancelled"];
 const STATUS_COLORS = {
@@ -16,6 +17,7 @@ export const AdminOrders = () => {
     const [loading, setLoading] = useState(true);
     const [filterStatus, setFilterStatus] = useState("");
     const [updatingId, setUpdatingId] = useState(null);
+    const [isExporting, setIsExporting] = useState(false);
     const { authorizationToken } = useAuth();
 
     const fetchOrders = async (status = "") => {
@@ -71,6 +73,58 @@ export const AdminOrders = () => {
         }
     };
 
+    const getExportData = async () => {
+        try {
+            setIsExporting(true);
+            const response = await fetch(`http://localhost:5000/api/admin/orders/export?status=${filterStatus}`, {
+                method: "GET",
+                headers: { Authorization: authorizationToken },
+            });
+            const data = await response.json();
+            setIsExporting(false);
+            return data;
+        } catch (error) {
+            console.error(error);
+            setIsExporting(false);
+            toast.error("Failed to fetch data for export");
+            return null;
+        }
+    };
+
+    const handleExportCSV = async () => {
+        const data = await getExportData();
+        if (data) {
+            const exportData = data.map(order => ({
+                Customer: order.username,
+                Email: order.email,
+                Service: order.serviceName,
+                Provider: order.serviceProvider,
+                Price: order.servicePrice,
+                Date: new Date(order.createdAt).toLocaleDateString("en-IN"),
+                Status: order.status
+            }));
+            exportToCSV(exportData, "orders-list.csv");
+            toast.success("Orders exported to CSV");
+        }
+    };
+
+    const handleExportPDF = async () => {
+        const data = await getExportData();
+        if (data) {
+            const headers = ["Customer", "Service", "Provider", "Price", "Date", "Status"];
+            const rows = data.map(order => [
+                order.username,
+                order.serviceName,
+                order.serviceProvider,
+                order.servicePrice,
+                new Date(order.createdAt).toLocaleDateString("en-IN"),
+                order.status
+            ]);
+            exportToPDF(headers, rows, "orders-list.pdf", "Admin Orders List");
+            toast.success("Orders exported to PDF");
+        }
+    };
+
     useEffect(() => { fetchOrders(filterStatus); }, [filterStatus]);
 
     return (
@@ -80,7 +134,29 @@ export const AdminOrders = () => {
                     <h1 className="main-heading">Orders</h1>
                     <p>Manage all service bookings and update their statuses</p>
                 </div>
-                <div className="header-right-container">
+                <div className="header-right-container" style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                    <div className="export-actions" style={{ display: "flex", gap: "10px" }}>
+                        <button 
+                            className="secondary-btn" 
+                            onClick={handleExportCSV} 
+                            disabled={isExporting}
+                            title="Export to CSV"
+                            style={{ padding: "10px", borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px" }}
+                        >
+                            {isExporting ? <FaSpinner className="spin" /> : <FaFileCsv />}
+                            <span className="btn-text-resp">CSV</span>
+                        </button>
+                        <button 
+                            className="secondary-btn" 
+                            onClick={handleExportPDF} 
+                            disabled={isExporting}
+                            title="Export to PDF"
+                            style={{ padding: "10px", borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px" }}
+                        >
+                            {isExporting ? <FaSpinner className="spin" /> : <FaFilePdf />}
+                            <span className="btn-text-resp">PDF</span>
+                        </button>
+                    </div>
                     <select
                         className="status-filter-select"
                         value={filterStatus}

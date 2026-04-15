@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
   //   to check whether is loggedIn or not
   const LogoutUser = () => {
     setToken("");
+    setUser("");
     return localStorage.removeItem("token");
   };
 
@@ -49,9 +50,19 @@ export const AuthProvider = ({ children }) => {
   }
 
   // to fetch services data from the database
-  const getServices = async() => {
+  const getServices = async(search = "", category = "") => {
     try {
-      const response = await fetch("http://localhost:5000/api/data/service", {
+      let url = "http://localhost:5000/api/data/service";
+      const params = new URLSearchParams();
+      
+      if (search) params.append("search", search);
+      if (category && category !== "All") params.append("category", category);
+      
+      if (params.toString()) {
+          url += `?${params.toString()}`;
+      }
+
+      const response = await fetch(url, {
         method: "GET",
       });
 
@@ -67,14 +78,19 @@ export const AuthProvider = ({ children }) => {
 
 
   useEffect(() => {
-    userAuthentication();
+    if (token) {
+      userAuthentication();
+    }
+  }, [token]);
+
+  useEffect(() => {
     getServices();
-  }, [])
+  }, []);
 
   const authorizationToken = `Bearer ${token}`;
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user, services, authorizationToken, isLoading }}>
+    <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user, services, getServices, authorizationToken, isLoading }}>
       {children}
     </AuthContext.Provider>
   );

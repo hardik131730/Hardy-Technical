@@ -192,9 +192,9 @@ const getAllServices = async(req, res, next) => {
 
 const addService = async(req, res, next) => {
     try {
-        const {service, price, description, provider} = req.body;
+        const {service, price, description, provider, category} = req.body;
         const image = req.file ? `/uploads/${req.file.filename}` : "";
-        const serviceCreated = await Service.create({service, price, description, provider, image});
+        const serviceCreated = await Service.create({service, price, description, provider, category, image});
         return res.status(201).json({message : "Service added successfully"})
     } catch (error) {
         next(error);
@@ -339,6 +339,35 @@ const deleteOrder = async (req, res, next) => {
     }
 };
 
+const exportUsers = async (req, res, next) => {
+    try {
+        const search = req.query.search || "";
+        const query = search ? {
+            $or: [
+                { username: { $regex: search, $options: "i" } },
+                { email: { $regex: search, $options: "i" } },
+                { phone: { $regex: search, $options: "i" } }
+            ]
+        } : {};
+
+        const users = await User.find(query, { password: 0 }).sort({ createdAt: -1 });
+        return res.status(200).json(users);
+    } catch (error) {
+        next(error);
+    }
+};
+
+const exportOrders = async (req, res, next) => {
+    try {
+        const status = req.query.status || "";
+        const query = status ? { status } : {};
+        const orders = await Order.find(query).sort({ createdAt: -1 });
+        return res.status(200).json(orders);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     getAllUsers, 
     addUser, 
@@ -359,5 +388,7 @@ module.exports = {
     markAllNotificationsAsRead,
     getAllOrders,
     updateOrderStatus,
-    deleteOrder
-};
+    deleteOrder,
+    exportUsers,
+    exportOrders
+};

@@ -9,6 +9,7 @@ export const AdminServiceUpdate = () => {
         description: "",
         price: "",
         provider: "",
+        category: "General",
         image: "",
     });
     const [imageFile, setImageFile] = useState(null);
@@ -65,6 +66,7 @@ export const AdminServiceUpdate = () => {
             formData.append("price", data.price);
             formData.append("description", data.description);
             formData.append("provider", data.provider);
+            formData.append("category", data.category);
             if (imageFile) {
                 formData.append("image", imageFile);
             }
@@ -133,6 +135,25 @@ export const AdminServiceUpdate = () => {
                             />
                         </div>
                         <div>
+                            <label htmlFor="category">Category</label>
+                            <select
+                                name="category"
+                                id="category"
+                                value={data.category || "General"}
+                                onChange={handleInput}
+                                required
+                            >
+                                <option value="General">General</option>
+                                <option value="Web Development">Web Development</option>
+                                <option value="Mobile App Development">Mobile App Development</option>
+                                <option value="Cloud Services">Cloud Services</option>
+                                <option value="Cyber Security">Cyber Security</option>
+                                <option value="Data Analytics">Data Analytics</option>
+                                <option value="UI/UX Design">UI/UX Design</option>
+                                <option value="Digital Marketing">Digital Marketing</option>
+                            </select>
+                        </div>
+                        <div>
                             <label htmlFor="description">Description</label>
                             <textarea
                                 name="description"
@@ -191,6 +212,7 @@ export const AdminServiceUpdate = () => {
                             <p className="preview-price">{data.price || "Price"}</p>
                             <p className="preview-description">{data.description || "Description"}</p>
                             <p className="preview-provider">By: {data.provider || "Provider"}</p>
+                            <span style={{display: 'inline-block', marginTop: '0.8rem', padding: '0.4rem 1rem', background: 'rgba(255,255,255,0.1)', borderRadius: '20px', fontSize: '1.2rem'}}>{data.category || "General"}</span>
                         </div>
                     </div>
                 </div>

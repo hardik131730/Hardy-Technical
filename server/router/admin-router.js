@@ -7,6 +7,7 @@ const upload = require("../middlewares/upload-middleware");
 
 router.route("/stats").get(authMiddleware, adminMiddleware, adminController.getAdminStats);
 router.route("/users").get(authMiddleware, adminMiddleware, adminController.getAllUsers);
+router.route("/users/export").get(authMiddleware, adminMiddleware, adminController.exportUsers);
 router.route("/users/add").post(authMiddleware, adminMiddleware, adminController.addUser);
 router.route("/users/:id").get(authMiddleware, adminMiddleware, adminController.getUserById);
 router.route("/users/update/:id").patch(authMiddleware, adminMiddleware, adminController.updateUserById);
@@ -27,6 +28,7 @@ router.route("/notifications/mark-all-read").patch(authMiddleware, adminMiddlewa
 router.route("/notifications/delete/:id").delete(authMiddleware, adminMiddleware, adminController.deleteNotification);
 
 router.route("/orders").get(authMiddleware, adminMiddleware, adminController.getAllOrders);
+router.route("/orders/export").get(authMiddleware, adminMiddleware, adminController.exportOrders);
 router.route("/orders/status/:id").patch(authMiddleware, adminMiddleware, adminController.updateOrderStatus);
 router.route("/orders/delete/:id").delete(authMiddleware, adminMiddleware, adminController.deleteOrder);
 

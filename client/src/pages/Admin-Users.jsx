@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaFileCsv, FaFilePdf, FaSpinner } from "react-icons/fa";
+import { exportToCSV, exportToPDF } from "../utils/exportUtils";
 
 export const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -9,6 +11,7 @@ export const AdminUsers = () => {
   const [limit, setLimit] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
   const [search, setSearch] = useState("");
+  const [isExporting, setIsExporting] = useState(false);
   const { authorizationToken } = useAuth();
 
   const getAllUsersData = async () => {
@@ -53,6 +56,55 @@ export const AdminUsers = () => {
     }
   };
 
+  const getExportData = async () => {
+    try {
+      setIsExporting(true);
+      const response = await fetch(`http://localhost:5000/api/admin/users/export?search=${search}`, {
+        method: "GET",
+        headers: { Authorization: authorizationToken },
+      });
+      const data = await response.json();
+      setIsExporting(false);
+      return data;
+    } catch (error) {
+      console.error(error);
+      setIsExporting(false);
+      toast.error("Failed to fetch data for export");
+      return null;
+    }
+  };
+
+  const handleExportCSV = async () => {
+    const data = await getExportData();
+    if (data) {
+      const exportData = data.map(user => ({
+        Name: user.username,
+        Email: user.email,
+        Phone: user.phone,
+        Admin: user.isAdmin ? "Yes" : "No",
+        Joined: new Date(user.createdAt).toLocaleDateString()
+      }));
+      exportToCSV(exportData, "users-list.csv");
+      toast.success("Users exported to CSV");
+    }
+  };
+
+  const handleExportPDF = async () => {
+    const data = await getExportData();
+    if (data) {
+      const headers = ["Name", "Email", "Phone", "Admin", "Joined"];
+      const rows = data.map(user => [
+        user.username,
+        user.email,
+        user.phone,
+        user.isAdmin ? "Yes" : "No",
+        new Date(user.createdAt).toLocaleDateString()
+      ]);
+      exportToPDF(headers, rows, "users-list.pdf", "Admin Users List");
+      toast.success("Users exported to PDF");
+    }
+  };
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       getAllUsersData();
@@ -90,7 +142,29 @@ export const AdminUsers = () => {
                 className="search-input"
               />
             </div>
-            <Link to="/admin/users/add" className="btn" style={{ padding: "10px 20px", backgroundColor: "var(--btn-color)", color: "#fff", borderRadius: "8px", textDecoration: "none", fontSize: "1.6rem" }}>Add User</Link>
+            <div className="export-actions" style={{ display: "flex", gap: "10px" }}>
+              <button 
+                className="secondary-btn" 
+                onClick={handleExportCSV} 
+                disabled={isExporting}
+                title="Export to CSV"
+                style={{ padding: "10px", borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px" }}
+              >
+                {isExporting ? <FaSpinner className="spin" /> : <FaFileCsv />}
+                <span className="btn-text-resp">CSV</span>
+              </button>
+              <button 
+                className="secondary-btn" 
+                onClick={handleExportPDF} 
+                disabled={isExporting}
+                title="Export to PDF"
+                style={{ padding: "10px", borderRadius: "8px", display: "flex", alignItems: "center", gap: "8px" }}
+              >
+                {isExporting ? <FaSpinner className="spin" /> : <FaFilePdf />}
+                <span className="btn-text-resp">PDF</span>
+              </button>
+            </div>
+            <Link to="/admin/users/add" className="btn" style={{ padding: "10px 20px", display: "flex", alignItems: "center", justifyContent: "center", backgroundColor: "var(--btn-color)", color: "#fff", borderRadius: "8px", textDecoration: "none", fontSize: "1.6rem" }}>Add User</Link>
           </div>
         </div>
         <div className="container admin-users">
