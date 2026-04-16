@@ -192,9 +192,9 @@ const getAllServices = async(req, res, next) => {
 
 const addService = async(req, res, next) => {
     try {
-        const {service, price, description, provider, category} = req.body;
+        const {service, price, description, provider} = req.body;
         const image = req.file ? `/uploads/${req.file.filename}` : "";
-        const serviceCreated = await Service.create({service, price, description, provider, category, image});
+        const serviceCreated = await Service.create({service, price, description, provider, image});
         return res.status(201).json({message : "Service added successfully"})
     } catch (error) {
         next(error);

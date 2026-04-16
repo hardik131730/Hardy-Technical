@@ -2,12 +2,8 @@ const Service = require("../models/service-model");
 
 const services = async (req, res)=> {
     try {
-        const { search, category } = req.query;
+        const { search } = req.query;
         let query = {};
-
-        if (category && category !== "All") {
-            query.category = category;
-        }
 
         if (search) {
             query.$or = [

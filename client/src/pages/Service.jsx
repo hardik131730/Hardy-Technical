@@ -7,29 +7,16 @@ export const Service = () => {
     const { services, isLoggedIn, authorizationToken, getServices } = useAuth();
     const [bookingLoading, setBookingLoading] = useState({});
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("All");
-
-    const categories = [
-        "All",
-        "General",
-        "Web Development",
-        "Mobile App Development",
-        "Cloud Services",
-        "Cyber Security",
-        "Data Analytics",
-        "UI/UX Design",
-        "Digital Marketing"
-    ];
 
     useEffect(() => {
         const timer = setTimeout(() => {
             if (getServices) {
-                getServices(searchTerm, selectedCategory);
+                getServices(searchTerm);
             }
         }, 400); // 400ms debounce
         
         return () => clearTimeout(timer);
-    }, [searchTerm, selectedCategory]);
+    }, [searchTerm]);
 
     const handleBooking = async (serviceId, serviceName) => {
         if (!isLoggedIn) {
@@ -76,74 +63,109 @@ export const Service = () => {
                 )}
             </div>
 
-            {/* Added Search and Filter Controls */}
-            <div className="container" style={{ marginTop: "4rem" }}>
-                <div style={{ display: "flex", flexDirection: "column", gap: "2rem", background: "rgba(255, 255, 255, 0.03)", padding: "2.4rem", borderRadius: "1.6rem", border: "1px solid rgba(255, 255, 255, 0.1)" }}>
-                    {/* Search Bar */}
-                    <div style={{ position: "relative", width: "100%", maxWidth: "50rem" }}>
+            {/* Compact Search Section */}
+            <div className="container" style={{ marginTop: "3rem", display: "flex", justifyContent: "center" }}>
+                <div style={{ 
+                    width: "100%", 
+                    maxWidth: "60rem",
+                    position: "relative",
+                    background: "rgba(255, 255, 255, 0.03)", 
+                    padding: "1.2rem", 
+                    borderRadius: "4rem", 
+                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    backdropFilter: "blur(10px)",
+                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.2)"
+                }}>
+                    <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+                        <div style={{ position: "absolute", left: "2rem", display: "flex", alignItems: "center", pointerEvents: "none" }}>
+                            <svg 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                width="18" 
+                                height="18" 
+                                viewBox="0 0 24 24" 
+                                fill="none" 
+                                stroke="currentColor" 
+                                strokeWidth="2.5" 
+                                strokeLinecap="round" 
+                                strokeLinejoin="round" 
+                                style={{ color: "var(--primary-color)", opacity: "0.9" }}
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </div>
                         <input 
                             type="text" 
-                            placeholder="Search by name, description, or provider..." 
+                            placeholder="Search services..." 
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{ width: "100%", padding: "1.4rem 2rem", borderRadius: "3rem", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.5)", color: "var(--text-main)", fontSize: "1.6rem" }}
+                            style={{ 
+                                width: "100%", 
+                                padding: "1.2rem 2rem 1.2rem 5rem", 
+                                borderRadius: "3rem", 
+                                border: "none", 
+                                background: "rgba(0,0,0,0.2)", 
+                                color: "#fff", 
+                                fontSize: "1.5rem",
+                                outline: "none",
+                                transition: "all 0.3s ease"
+                            }}
+                            onFocus={(e) => e.target.parentElement.parentElement.style.borderColor = "var(--primary-color)"}
+                            onBlur={(e) => e.target.parentElement.parentElement.style.borderColor = "rgba(255,255,255,0.08)"}
                         />
                     </div>
-                    
-                    {/* Category Filter Pills */}
-                    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                        {categories.map((category) => (
-                            <button
-                                key={category}
-                                onClick={() => setSelectedCategory(category)}
-                                style={{
-                                    padding: "0.8rem 1.6rem",
-                                    borderRadius: "2rem",
-                                    fontSize: "1.4rem",
-                                    fontWeight: "500",
-                                    cursor: "pointer",
-                                    transition: "all 0.3s ease",
-                                    border: selectedCategory === category ? "1px solid var(--primary-color)" : "1px solid rgba(255,255,255,0.1)",
-                                    background: selectedCategory === category ? "var(--primary-color)" : "rgba(255, 255, 255, 0.05)",
-                                    color: selectedCategory === category ? "#fff" : "var(--text-dim)"
-                                }}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
                 </div>
+            </div>
+
+            {/* Tightened Service Counter */}
+            <div className="container" style={{ marginTop: "1.6rem", textAlign: "center" }}>
+                <p style={{ fontSize: "1.2rem", color: "var(--text-dim)", letterSpacing: "2px", textTransform: "uppercase", opacity: "0.6" }}>
+                    {services.length} {services.length === 1 ? 'Service' : 'Services'} Available
+                </p>
             </div>
 
             <div className="container grid grid-three-cols" style={{ marginTop: "4rem" }}>
                 {services && services.length > 0 ? (
                     services.map((curElem) => {
-                        const { _id, service, description, price, provider, category } = curElem;
+                        const { _id, service, description, price, provider } = curElem;
                         const isLoading = bookingLoading[_id];
                         return (
-                            <div className="card service-card" key={_id}>
-                                <div className="card-img">
+                            <div className="card service-card" key={_id} style={{
+                                borderRadius: "2rem",
+                                overflow: "hidden",
+                                background: "rgba(255, 255, 255, 0.02)",
+                                border: "1px solid rgba(255, 255, 255, 0.05)",
+                                transition: "transform 0.3s ease, box-shadow 0.3s ease"
+                            }}>
+                                <div className="card-img" style={{ position: "relative", height: "180px", overflow: "hidden" }}>
                                     <img
                                         src={curElem.image ? `http://localhost:5000${curElem.image}` : "/images/design.png"}
                                         alt={service}
-                                        width="200"
+                                        style={{ width: "100%", height: "100%", objectFit: "cover", opacity: "0.8" }}
                                     />
-                                </div>
-                                <div className="card-details">
-                                    <div className="grid grid-two-cols" style={{alignItems: 'center'}}>
-                                        <p>{provider}</p>
-                                        <p style={{ color: "var(--primary-color)", fontWeight: "700", textAlign: "right" }}>{price}</p>
+                                    <div style={{ position: "absolute", top: "1.6rem", right: "1.6rem", background: "rgba(0,0,0,0.6)", padding: "0.6rem 1.2rem", borderRadius: "1rem", backdropFilter: "blur(5px)" }}>
+                                        <p style={{ color: "var(--primary-color)", fontWeight: "700", fontSize: "1.4rem" }}>{price}</p>
                                     </div>
-                                    <span style={{display: 'inline-block', marginTop: '0.8rem', padding: '0.4rem 1rem', background: 'rgba(255,255,255,0.1)', borderRadius: '20px', fontSize: '1.2rem', color: 'var(--text-dim)'}}>
-                                        {category || "General"}
-                                    </span>
-                                    <h2 style={{marginTop: "1rem"}}>{service}</h2>
-                                    <p>{description}</p>
                                 </div>
-                                <div className="service-card-action">
+                                <div className="card-details" style={{ padding: "2.4rem" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1.2rem" }}>
+                                        <p style={{ fontSize: "1.2rem", color: "var(--text-dim)", display: "flex", alignItems: "center", gap: "0.8rem" }}>
+                                            <span style={{ display: "inline-block", width: "8px", height: "8px", borderRadius: "50%", background: "var(--primary-color)" }}></span>
+                                            {provider}
+                                        </p>
+                                    </div>
+                                    <h2 style={{ fontSize: "2.2rem", marginBottom: "1rem", color: "#fff" }}>{service}</h2>
+                                    <p style={{ fontSize: "1.4rem", color: "rgba(255,255,255,0.6)", lineHeight: "1.5", marginBottom: "2rem", minHeight: "4.2rem" }}>{description}</p>
+                                    
                                     <button
                                         className="btn"
-                                        style={{ width: "100%", marginTop: "1.6rem" }}
+                                        style={{ 
+                                            width: "100%", 
+                                            padding: "1.2rem", 
+                                            borderRadius: "1.5rem",
+                                            fontWeight: "600",
+                                            boxShadow: "0 4px 15px rgba(0,0,0,0.2)"
+                                        }}
                                         onClick={() => handleBooking(_id, service)}
                                         disabled={isLoading}
                                     >

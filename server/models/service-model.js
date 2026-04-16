@@ -5,7 +5,6 @@ const serviceSchema = new Schema({
     description:{type:String, required:true},
     price:{type:String, required:true},
     provider:{type:String, required:true},
-    category:{type:String, default:"General"},
     image:{type:String, default:""}
 })
 

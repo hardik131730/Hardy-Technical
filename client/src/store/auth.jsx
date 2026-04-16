@@ -50,13 +50,12 @@ export const AuthProvider = ({ children }) => {
   }
 
   // to fetch services data from the database
-  const getServices = async(search = "", category = "") => {
+  const getServices = async(search = "") => {
     try {
       let url = "http://localhost:5000/api/data/service";
       const params = new URLSearchParams();
       
       if (search) params.append("search", search);
-      if (category && category !== "All") params.append("category", category);
       
       if (params.toString()) {
           url += `?${params.toString()}`;
