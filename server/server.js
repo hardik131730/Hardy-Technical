@@ -47,7 +47,7 @@ app.use("/api/orders", orderRoute);
 
 app.use(errorMiddleware);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
     server.listen(PORT, () => {
