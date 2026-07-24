@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
   
   const userAuthentication = async() => {
     try{
-      const response = await fetch("http://localhost:5000/api/auth/user", {
+      const response = await fetch("https://hardy-technical.onrender.com/api/auth/user", {
         method : "GET",
         headers: {
           Authorization:`Bearer ${token}`,
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   // to fetch services data from the database
   const getServices = async(search = "") => {
     try {
-      let url = "http://localhost:5000/api/data/service";
+      let url = "https://hardy-technical.onrender.com/api/data/service";
       const params = new URLSearchParams();
       
       if (search) params.append("search", search);

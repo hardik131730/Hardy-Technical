@@ -12,7 +12,7 @@ export const AdminContacts = () => {
 
     const getContactsData = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/contacts?page=${currentPage}&limit=${limit}&search=${search}`, {
+            const response = await fetch(`https://hardy-technical.onrender.com/api/admin/contacts?page=${currentPage}&limit=${limit}&search=${search}`, {
                 method: "GET",
                 headers: {
                     Authorization: authorizationToken,
@@ -33,7 +33,7 @@ export const AdminContacts = () => {
 
     const deleteContact = async (id) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/contacts/delete/${id}`, {
+            const response = await fetch(`https://hardy-technical.onrender.com/api/admin/contacts/delete/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: authorizationToken,
@@ -108,7 +108,7 @@ export const AdminContacts = () => {
                                             <td>
                                                 {curData.image ? (
                                                     <img
-                                                        src={`http://localhost:5000${curData.image}`}
+                                                        src={`https://hardy-technical.onrender.com${curData.image}`}
                                                         alt={curData.username}
                                                         className="admin-user-img"
                                                     />

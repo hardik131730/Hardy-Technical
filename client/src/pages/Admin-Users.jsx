@@ -16,7 +16,7 @@ export const AdminUsers = () => {
 
   const getAllUsersData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/users?page=${currentPage}&limit=${limit}&search=${search}`, {
+      const response = await fetch(`https://hardy-technical.onrender.com/api/admin/users?page=${currentPage}&limit=${limit}&search=${search}`, {
         method: "GET",
         headers: {
           Authorization: authorizationToken,
@@ -38,7 +38,7 @@ export const AdminUsers = () => {
   const deleteUser = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin/users/delete/${id}`,
+        `https://hardy-technical.onrender.com/api/admin/users/delete/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -59,7 +59,7 @@ export const AdminUsers = () => {
   const getExportData = async () => {
     try {
       setIsExporting(true);
-      const response = await fetch(`http://localhost:5000/api/admin/users/export?search=${search}`, {
+      const response = await fetch(`https://hardy-technical.onrender.com/api/admin/users/export?search=${search}`, {
         method: "GET",
         headers: { Authorization: authorizationToken },
       });
@@ -188,7 +188,7 @@ export const AdminUsers = () => {
                         <td>
                           {curUser.image ? (
                             <img
-                              src={`http://localhost:5000${curUser.image}`}
+                              src={`https://hardy-technical.onrender.com${curUser.image}`}
                               alt={curUser.username}
                               className="admin-user-img"
                             />

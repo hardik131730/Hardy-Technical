@@ -23,7 +23,7 @@ export const AdminLayout = () => {
 
   const fetchUnreadCount = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/admin/notifications", {
+      const response = await fetch("https://hardy-technical.onrender.com/api/admin/notifications", {
         headers: { Authorization: authorizationToken },
       });
       const data = await response.json();
@@ -53,7 +53,7 @@ export const AdminLayout = () => {
     // Listen for new service bookings
     socket.on("new_order", (data) => {
       fetchUnreadCount();
-      toast.info(`📦 ${data.username} booked "${data.serviceName}"`, { position: "top-right", theme: "dark" });
+      toast.info(`ðŸ“¦ ${data.username} booked "${data.serviceName}"`, { position: "top-right", theme: "dark" });
     });
 
     // Click outside listener for profile dropdown
@@ -100,7 +100,7 @@ export const AdminLayout = () => {
           <div className="admin-profile-container" ref={profileRef}>
             <div className="admin-profile-toggle" onClick={() => setIsProfileOpen(!isProfileOpen)}>
               {user?.image ? (
-                <img src={`http://localhost:5000${user.image}`} alt="Profile" className="header-avatar" />
+                <img src={`https://hardy-technical.onrender.com${user.image}`} alt="Profile" className="header-avatar" />
               ) : (
                 <FaUserCircle className="default-avatar-icon" />
               )}

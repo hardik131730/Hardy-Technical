@@ -26,7 +26,7 @@ export const Service = () => {
 
         setBookingLoading((prev) => ({ ...prev, [serviceId]: true }));
         try {
-            const response = await fetch("http://localhost:5000/api/orders/book", {
+            const response = await fetch("https://hardy-technical.onrender.com/api/orders/book", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -57,7 +57,7 @@ export const Service = () => {
                 {isLoggedIn && (
                     <div style={{ marginTop: "1.6rem" }}>
                         <Link to="/my-bookings" className="btn secondary-btn" style={{ fontSize: "1.4rem", padding: "1rem 2rem" }}>
-                            My Bookings →
+                            My Bookings â†’
                         </Link>
                     </div>
                 )}
@@ -139,7 +139,7 @@ export const Service = () => {
                             }}>
                                 <div className="card-img" style={{ position: "relative", height: "180px", overflow: "hidden" }}>
                                     <img
-                                        src={curElem.image ? `http://localhost:5000${curElem.image}` : "/images/design.png"}
+                                        src={curElem.image ? `https://hardy-technical.onrender.com${curElem.image}` : "/images/design.png"}
                                         alt={service}
                                         style={{ width: "100%", height: "100%", objectFit: "cover", opacity: "0.8" }}
                                     />

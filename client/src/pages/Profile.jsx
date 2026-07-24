@@ -12,7 +12,7 @@ export const Profile = () => {
     });
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState(
-        user?.image ? `http://localhost:5000${user.image}` : null
+        user?.image ? `https://hardy-technical.onrender.com${user.image}` : null
     );
     const [isSubmitting, setIsSubmitting] = useState(false);
     const fileInputRef = useRef(null);
@@ -40,7 +40,7 @@ export const Profile = () => {
                 data.append("image", imageFile);
             }
 
-            const response = await fetch("http://localhost:5000/api/auth/user/update-profile", {
+            const response = await fetch("https://hardy-technical.onrender.com/api/auth/user/update-profile", {
                 method: "PATCH",
                 headers: {
                     Authorization: authorizationToken,
@@ -83,7 +83,7 @@ export const Profile = () => {
                             </div>
                         )}
                         <div className="profile-avatar-overlay">
-                            <span>📷 Change</span>
+                            <span>ðŸ“· Change</span>
                         </div>
                     </div>
                     <input

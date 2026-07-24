@@ -23,7 +23,7 @@ export const AdminOrders = () => {
     const fetchOrders = async (status = "") => {
         setLoading(true);
         try {
-            const url = `http://localhost:5000/api/admin/orders${status ? `?status=${status}` : ""}`;
+            const url = `https://hardy-technical.onrender.com/api/admin/orders${status ? `?status=${status}` : ""}`;
             const response = await fetch(url, { headers: { Authorization: authorizationToken } });
             const data = await response.json();
             if (response.ok) setOrders(data.orders || []);
@@ -37,7 +37,7 @@ export const AdminOrders = () => {
     const handleStatusUpdate = async (orderId, newStatus) => {
         setUpdatingId(orderId);
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/orders/status/${orderId}`, {
+            const response = await fetch(`https://hardy-technical.onrender.com/api/admin/orders/status/${orderId}`, {
                 method: "PATCH",
                 headers: { "Content-Type": "application/json", Authorization: authorizationToken },
                 body: JSON.stringify({ status: newStatus }),
@@ -60,7 +60,7 @@ export const AdminOrders = () => {
 
     const handleDelete = async (orderId) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/orders/delete/${orderId}`, {
+            const response = await fetch(`https://hardy-technical.onrender.com/api/admin/orders/delete/${orderId}`, {
                 method: "DELETE",
                 headers: { Authorization: authorizationToken },
             });
@@ -76,7 +76,7 @@ export const AdminOrders = () => {
     const getExportData = async () => {
         try {
             setIsExporting(true);
-            const response = await fetch(`http://localhost:5000/api/admin/orders/export?status=${filterStatus}`, {
+            const response = await fetch(`https://hardy-technical.onrender.com/api/admin/orders/export?status=${filterStatus}`, {
                 method: "GET",
                 headers: { Authorization: authorizationToken },
             });

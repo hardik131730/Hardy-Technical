@@ -13,7 +13,7 @@ export const AdminServices = () => {
 
   const getAllServicesData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/services?page=${currentPage}&limit=${limit}&search=${search}`, {
+      const response = await fetch(`https://hardy-technical.onrender.com/api/admin/services?page=${currentPage}&limit=${limit}&search=${search}`, {
         method: "GET",
         headers: {
           Authorization: authorizationToken,
@@ -35,7 +35,7 @@ export const AdminServices = () => {
   const deleteService = async (id) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/admin/services/delete/${id}`,
+        `https://hardy-technical.onrender.com/api/admin/services/delete/${id}`,
         {
           method: "DELETE",
           headers: {

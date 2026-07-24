@@ -18,7 +18,7 @@ export const MyBookings = () => {
 
     const fetchBookings = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/orders/my-bookings", {
+            const response = await fetch("https://hardy-technical.onrender.com/api/orders/my-bookings", {
                 headers: { Authorization: authorizationToken },
             });
             const data = await response.json();
@@ -32,7 +32,7 @@ export const MyBookings = () => {
 
     const handleCancel = async (id, serviceName) => {
         try {
-            const response = await fetch(`http://localhost:5000/api/orders/cancel/${id}`, {
+            const response = await fetch(`https://hardy-technical.onrender.com/api/orders/cancel/${id}`, {
                 method: "PATCH",
                 headers: { Authorization: authorizationToken },
             });

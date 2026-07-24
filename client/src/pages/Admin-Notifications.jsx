@@ -10,7 +10,7 @@ export const AdminNotifications = () => {
 
   const getNotifications = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/admin/notifications", {
+      const response = await fetch("https://hardy-technical.onrender.com/api/admin/notifications", {
         method: "GET",
         headers: {
           Authorization: authorizationToken,
@@ -29,7 +29,7 @@ export const AdminNotifications = () => {
 
   const markAsRead = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/notifications/mark-read/${id}`, {
+      const response = await fetch(`https://hardy-technical.onrender.com/api/admin/notifications/mark-read/${id}`, {
         method: "PATCH",
         headers: {
           Authorization: authorizationToken,
@@ -48,7 +48,7 @@ export const AdminNotifications = () => {
 
   const markAllAsRead = async () => {
     try {
-      const response = await fetch("http://localhost:5000/api/admin/notifications/mark-all-read", {
+      const response = await fetch("https://hardy-technical.onrender.com/api/admin/notifications/mark-all-read", {
         method: "PATCH",
         headers: {
           Authorization: authorizationToken,
@@ -65,7 +65,7 @@ export const AdminNotifications = () => {
 
   const deleteNotif = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/admin/notifications/delete/${id}`, {
+      const response = await fetch(`https://hardy-technical.onrender.com/api/admin/notifications/delete/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: authorizationToken,

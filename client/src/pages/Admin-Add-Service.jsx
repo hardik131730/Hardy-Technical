@@ -46,7 +46,7 @@ export const AdminAddService = () => {
                 formData.append("image", imageFile);
             }
 
-            const response = await fetch("http://localhost:5000/api/admin/services/add", {
+            const response = await fetch("https://hardy-technical.onrender.com/api/admin/services/add", {
                 method: "POST",
                 headers: {
                     Authorization: authorizationToken,
@@ -142,7 +142,7 @@ export const AdminAddService = () => {
                                     <img src={imagePreview} alt="Preview" className="image-preview" />
                                 ) : (
                                     <div className="image-upload-placeholder">
-                                        <span className="upload-icon">📷</span>
+                                        <span className="upload-icon">ðŸ“·</span>
                                         <p>Click to upload image</p>
                                         <small>JPEG, PNG, WebP (max 5MB)</small>
                                     </div>

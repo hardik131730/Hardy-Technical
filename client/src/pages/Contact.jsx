@@ -41,7 +41,7 @@ export const Contact = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5000/api/form/contact", {
+      const res = await fetch("https://hardy-technical.onrender.com/api/form/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

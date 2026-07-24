@@ -21,7 +21,7 @@ export const AdminServiceUpdate = () => {
 
     const getSingleServiceData = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/services/${params.id}`, {
+            const response = await fetch(`https://hardy-technical.onrender.com/api/admin/services/${params.id}`, {
                 method: "GET",
                 headers: {
                     Authorization: authorizationToken,
@@ -31,7 +31,7 @@ export const AdminServiceUpdate = () => {
             if (response.ok) {
                 setData(serviceData);
                 if (serviceData.image) {
-                    setImagePreview(`http://localhost:5000${serviceData.image}`);
+                    setImagePreview(`https://hardy-technical.onrender.com${serviceData.image}`);
                 }
             }
         } catch (error) {
@@ -69,7 +69,7 @@ export const AdminServiceUpdate = () => {
                 formData.append("image", imageFile);
             }
 
-            const response = await fetch(`http://localhost:5000/api/admin/services/update/${params.id}`, {
+            const response = await fetch(`https://hardy-technical.onrender.com/api/admin/services/update/${params.id}`, {
                 method: "PATCH",
                 headers: {
                     Authorization: authorizationToken,
@@ -156,7 +156,7 @@ export const AdminServiceUpdate = () => {
                                     <img src={imagePreview} alt="Preview" className="image-preview" />
                                 ) : (
                                     <div className="image-upload-placeholder">
-                                        <span className="upload-icon">📷</span>
+                                        <span className="upload-icon">ðŸ“·</span>
                                         <p>Click to upload a new image</p>
                                         <small>JPEG, PNG, WebP (max 5MB)</small>
                                     </div>

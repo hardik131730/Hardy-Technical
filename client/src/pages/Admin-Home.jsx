@@ -14,7 +14,7 @@ export const AdminHome = () => {
 
     const getStats = async () => {
         try {
-            const response = await fetch("http://localhost:5000/api/admin/stats", {
+            const response = await fetch("https://hardy-technical.onrender.com/api/admin/stats", {
                 method: "GET",
                 headers: {
                     Authorization: authorizationToken,
