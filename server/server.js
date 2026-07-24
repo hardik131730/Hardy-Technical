@@ -11,7 +11,7 @@ const connectDB = require("./utils/db");
 const errorMiddleware = require("./middlewares/error-middleware");
 
 const corsOptions = {
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "https://hardy-technical.vercel.app"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
 };
